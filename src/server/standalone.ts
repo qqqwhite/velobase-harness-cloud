@@ -44,6 +44,10 @@ async function start() {
   log.info({ SERVICE_MODE, modes }, "Starting services...");
   logResourceStatus();
 
+  // 运行时初始化（Lark handler 注册、Tool registry 等）
+  const { initRuntime } = await import("@/server/init");
+  await initRuntime();
+
   if (shouldStart("api")) {
     const { startApi } = await import("@/api/start");
     const { shutdown } = await startApi();
