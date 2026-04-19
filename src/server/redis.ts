@@ -13,7 +13,7 @@ const isNextBuild = process.env.NEXT_PHASE === "phase-production-build";
 const SHARED_REDIS_OPTS = {
   lazyConnect: true,
   retryStrategy: (times: number) => Math.min(times * 50, 2000),
-  maxRetriesPerRequest: null as null, // BullMQ requires this to be null
+  maxRetriesPerRequest: null, // BullMQ requires this to be null
 } as const;
 
 const createRedis = () => {
