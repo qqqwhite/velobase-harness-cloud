@@ -8,6 +8,7 @@
  */
 
 import type { LarkCard } from './types';
+import type { InteractiveCardActionEvent } from '@larksuiteoapi/node-sdk';
 import { createLogger } from '../logger';
 
 const logger = createLogger('lark-event');
@@ -119,7 +120,7 @@ async function getCardDispatcher() {
         encryptKey: env.LARK_ENCRYPT_KEY ?? '',
         verificationToken: env.LARK_VERIFICATION_TOKEN ?? '',
       },
-      async (data: lark.InteractiveCardActionEvent) => {
+      async (data: InteractiveCardActionEvent) => {
         const typed = data as unknown as CardActionEventData;
         logger.info(
           {
