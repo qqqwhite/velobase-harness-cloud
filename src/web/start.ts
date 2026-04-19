@@ -20,7 +20,8 @@ export interface WebHandle {
 
 export async function startWeb(): Promise<WebHandle> {
   const port = parseInt(process.env.PORT ?? String(DEFAULT_WEB_PORT), 10);
-  const hostname = process.env.HOSTNAME ?? "0.0.0.0";
+  // HOSTNAME is reserved by K8s (set to pod name) — never use it for binding
+  const hostname = process.env.WEB_HOST ?? "0.0.0.0";
 
   // Dynamic import to avoid loading Next.js when not needed
   const next = (await import("next")).default;
