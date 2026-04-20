@@ -14,8 +14,8 @@ COPY .next/static ./.next/static
 COPY next.config.js ./
 COPY package.json ./
 
-# Copy .env file (created by CI from .env.{environment})
-COPY .env ./
+# Copy .env file if present (CI creates from .env.{environment}; Velobase Cloud injects env via K8s)
+COPY .env* ./
 
 # Expose port
 EXPOSE 3000
