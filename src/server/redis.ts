@@ -81,3 +81,12 @@ if (!isNextBuild && env.NODE_ENV !== "production") {
   globalForRedis.redis = redis;
 }
 
+// 全局 error 监听：防止 ioredis 打出 "Unhandled error event" 并保证结构化日志
+// ioredis 在断线/重连期间会 emit error；retryStrategy 会自动重连，此处只需记录
+if (!isNextBuild) {
+  const log = createLogger("redis");
+  redis.on("error", (err: Error) => {
+    log.warn({ error: err.message, code: (err as NodeJS.ErrnoException).code }, "Redis connection error (auto-retry)");
+  });
+}
+
